@@ -1,6 +1,8 @@
 import { Controller, Get, UseFilters, UsePipes, HttpStatus, HttpException,Param } from '@nestjs/common';
-import {HttpExceptionFilter} from '../filter/http-exception.filter'
-import { ValidationPipe } from '../pipe/validation.pipe'
+import {HttpExceptionFilter} from '../common/filters/http-exception.filter'
+import { ValidationPipe } from '../common/pipes/validation.pipe'
+import {CommonException} from '../common/errors/common.exception'
+import {sendVeriCodeErrorFailInfo} from '../common/failInfo/user'
 
 class CreateCatDto {
     id: string;
@@ -8,7 +10,7 @@ class CreateCatDto {
 
 export class ForbiddenException extends HttpException {
     constructor() {
-      super('Forbidden', HttpStatus.FORBIDDEN);
+      super('Forbidden', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -19,12 +21,10 @@ export class TestController {
 
     @Get(':id')
     @UsePipes(ValidationPipe)
-    @UseFilters(new HttpExceptionFilter())
+    // @UseFilters(new HttpExceptionFilter())
     getTestContr(@Param() id: CreateCatDto) {
-        // throw new HttpException({
-        //     status: HttpStatus.FORBIDDEN,
-        //     message:'211'
-        // }, HttpStatus.FORBIDDEN);
+        throw new CommonException(sendVeriCodeErrorFailInfo);
+
         return 'id:'+ id.id
         // return this.catsService.getHello()
     }
