@@ -1,3 +1,1 @@
-export interface TokenEntity {
-    token: string
-}
+export type TokenEntity = string;
