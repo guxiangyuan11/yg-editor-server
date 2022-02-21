@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import {HttpExceptionFilter} from './common/filters/http-exception.filter'
 import {SuccessInterceptor} from './common/interceptors/success.interceptors'
 
+
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter())
